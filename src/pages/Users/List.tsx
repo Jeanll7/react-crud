@@ -9,7 +9,7 @@ import {
   GridRenderCellParams,
   GridValueGetterParams,
 } from "@mui/x-data-grid";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { useLocalStorage } from "usehooks-ts";
 
 import PageTitle from "../../components/PageTitle";
@@ -18,6 +18,10 @@ import DataTable from "../../components/DataTable";
 import { User } from "./types/User";
 
 export default function List() {
+  // const [users, setUsers] = useLocalStorage<User[]>("users", []);
+  const [users, setUsers] = useLocalStorage<User[]>("users", []);
+  const navigate = useNavigate();
+
   const onCall = (params: GridRenderCellParams) => {
     if (!params.row.mobile) return;
     window.location.href = `https://wa.me/55${params.row.mobile.replace(
@@ -28,10 +32,15 @@ export default function List() {
 
   const onEdit = (params: GridRenderCellParams) => {
     // Edição de usuário
+    if (!params.row.id) return;
+    navigate(`/users/${params.row.id}`);
   };
 
   const onDelete = (params: GridRenderCellParams) => {
     // Exclusão de usuário
+    if (!params.row.id) return;
+
+    setUsers(users.filter((user) => user.id !== params.row.id));
   };
 
   const columns: GridColDef[] = [
@@ -92,27 +101,6 @@ export default function List() {
     },
   ];
 
-  // const [users, setUsers] = useLocalStorage<User[]>("users", []);
-  const [users] = useLocalStorage<User[]>("users", []);
-
-  // const users = [
-  //   {
-  //     id: "1",
-  //     fullName: "Jean Leal",
-  //     document: "986.007.560-30",
-  //     birthDate: new Date(1982, 1, 1),
-  //     email: "jeanll@teste.com.br",
-  //     emailVerified: true,
-  //     mobile: "(48) 99999-9999",
-  //     zipCode: "00000-000",
-  //     addressName: "Rua Teste",
-  //     number: "123",
-  //     complement: "",
-  //     neighborhood: "Bairro Teste",
-  //     city: "Florianópolis",
-  //     state: "SC",
-  //   },
-  // ];
   return (
     <>
       <Stack direction={{ xs: "column", sm: "row" }} gap={1} mb={2}>

@@ -48,7 +48,7 @@ export default function Form() {
   useEffect(() => {
     if (!id) return;
 
-    // busca o usuário pelo id
+    // busca o usuário via API
     const user = users.find((user) => user.id === id);
 
     if (!user) return;

@@ -29,26 +29,3 @@ export async function findBrazilianZipCode(zipCode: string): Promise<
     return;
   }
 }
-
-// import axios from "axios";
-
-// const api = axios.create({
-//   baseURL: "https://viacep.com.br/ws/",
-// });
-
-// export async function findBrazilianZipCode(zipCode: string) {
-//   try {
-//     const { data } = await api.get(`${zipCode.replace(/\D/g, "")}/json/`);
-
-//     return {
-//       zipCode: data.cep,
-//       addressName: data.logradouro,
-//       neighborhood: data.bairro,
-//       city: data.localidade,
-//       state: data.uf,
-//     };
-//   } catch (error) {
-//     console.error(error);
-//     return;
-//   }
-// }
